@@ -1,6 +1,8 @@
 package com.example.restapi.config;
 
 import com.example.restapi.jwt.JwtAuthenticationFilter;
+import com.example.restapi.jwt.JwtAuthorizationFilter;
+import com.example.restapi.repository.MemberRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,9 +16,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CorsConfig corsConfig;
+    private final MemberRepository memberRepository;
 
-    public SecurityConfig(CorsConfig corsConfig) {
+    public SecurityConfig(CorsConfig corsConfig, MemberRepository memberRepository) {
         this.corsConfig = corsConfig;
+        this.memberRepository = memberRepository;
     }
 
     @Bean
@@ -34,9 +38,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().disable()
                 .httpBasic().disable()
                 .addFilter(new JwtAuthenticationFilter(authenticationManager())) // WebSecurityConfigurerAdapter 이 가지고 있는 authenticationManager() 을 인자로 넣어줌
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), memberRepository))
                 .authorizeRequests()
-                .antMatchers("/member/**").authenticated()
-                .antMatchers("/item/**").authenticated()
+                .antMatchers("/member/api/**").authenticated()
+                .antMatchers("/item/api/**").authenticated()
                 .anyRequest().permitAll();
     }
 }
