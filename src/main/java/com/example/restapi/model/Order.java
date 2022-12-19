@@ -6,19 +6,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
+@Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
-public class Item {
+@Table(name = "orders")
+public class Order {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    String name;
-    Long price;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    Order order;
+    Member member;
+
+    LocalDateTime orderDate;
 }
