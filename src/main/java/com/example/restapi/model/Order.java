@@ -16,10 +16,11 @@ import java.time.LocalDateTime;
 public class Order {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
+
+    private Long price;
+    private LocalDateTime orderDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    Member member;
-
-    LocalDateTime orderDate;
+    private Member member;
 }

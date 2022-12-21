@@ -8,14 +8,17 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
+@Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
-public class Item {
+public class OrderItem {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private Long price;
+    @ManyToOne(fetch = FetchType.LAZY)
+    Order order;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    Item item;
 }

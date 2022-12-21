@@ -7,7 +7,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -50,12 +49,5 @@ public class MemberService {
         MemberDto memberDto = new MemberDto(member.getId(), member.getUsername(), member.getName());
 
         return memberDto;
-    }
-
-    public List<MemberDto> getMemberDtoList() {
-
-        List<MemberDto> memberList = memberRepository.getMemberDtoList();
-
-        return memberList;
     }
 }
