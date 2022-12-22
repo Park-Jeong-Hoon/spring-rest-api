@@ -36,6 +36,21 @@ public class OrderController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @PostMapping("/cancel/{id}")
+    public ResponseEntity<String> cancelOrder(@PathVariable Long id) {
+
+        String result = "success";
+
+        try {
+            orderService.cancelOrder(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = "fail";
+        }
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<OrderDto> getById(@PathVariable Long id) {
 

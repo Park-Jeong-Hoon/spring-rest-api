@@ -57,6 +57,14 @@ public class OrderService {
         return order.getId();
     }
 
+    @Transactional
+    public void cancelOrder(Long id) {
+
+        Order order = orderRepository.findById(id).get();
+
+        order.setStatus(false);
+    }
+
     public OrderDto getById(Long id) {
 
         Optional<Order> orderOptional = orderRepository.findById(id);
