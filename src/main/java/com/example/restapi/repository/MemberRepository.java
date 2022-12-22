@@ -11,6 +11,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Member findByUsername(String username);
 
+    List<Member> findAllByUsername(String username);
+
     @Query("SELECT new com.example.restapi.dto.MemberDto(m.id, m.username, m.name) FROM Member m")
     List<MemberDto> getMemberDtoList();
 }

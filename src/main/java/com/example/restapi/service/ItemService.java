@@ -19,12 +19,14 @@ public class ItemService {
     }
 
     @Transactional
-    public void add(ItemDto itemDto) { // 아이템 추가
+    public Long add(ItemDto itemDto) { // 아이템 추가
 
         Item item = new Item();
         item.setName(itemDto.getName());
         item.setPrice(itemDto.getPrice());
         itemRepository.save(item);
+
+        return item.getId();
     }
 
     @Transactional

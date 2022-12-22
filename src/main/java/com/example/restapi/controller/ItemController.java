@@ -28,7 +28,7 @@ public class ItemController {
             itemService.add(itemDto);
         } catch (Exception e) {
             e.printStackTrace();
-            result = e.getMessage();
+            result = "fail";
         }
 
         return new ResponseEntity<>(result, HttpStatus.OK);

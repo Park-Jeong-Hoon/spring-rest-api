@@ -14,4 +14,5 @@ public class OrderDto {
     private Long id;
     private Long price;
     private LocalDateTime orderDate;
+    private Boolean status;
 }

@@ -20,6 +20,7 @@ public class Order {
 
     private Long price;
     private LocalDateTime orderDate;
+    private Boolean status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;

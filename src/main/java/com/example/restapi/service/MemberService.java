@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,20 +22,19 @@ public class MemberService {
     }
 
     @Transactional
-    public String join(Member member) throws Exception { // 회원가입
+    public Long join(Member member) throws IllegalStateException { // 회원가입
 
-        String result = "success";
+        List<Member> members = memberRepository.findAllByUsername(member.getUsername());
+
+        if (!members.isEmpty()) {
+            throw new IllegalStateException("already exist");
+        }
 
         member.setPassword(passwordEncoder.encode(member.getPassword()));
         member.setRoles("ROLE_USER");
+        memberRepository.save(member);
 
-        try {
-            memberRepository.save(member);
-        } catch (Exception e) {
-            throw new Exception("save error");
-        }
-
-        return result;
+        return member.getId();
     }
 
     public MemberDto getById(Long id) {

@@ -32,7 +32,7 @@ public class OrderService {
     }
 
     @Transactional
-    public void saveOrder(Long memberId, List<Long> itemIdList) {
+    public Long saveOrder(Long memberId, List<Long> itemIdList) {
 
         Member member = memberRepository.findById(memberId).get();
         Long price = 0L;
@@ -49,9 +49,12 @@ public class OrderService {
             price += item.getPrice();
         }
 
-        order.setOrderDate(LocalDateTime.now());
         order.setPrice(price);
+        order.setOrderDate(LocalDateTime.now());
+        order.setStatus(true);
         orderRepository.save(order);
+
+        return order.getId();
     }
 
     public OrderDto getById(Long id) {
@@ -68,6 +71,7 @@ public class OrderService {
         orderDto.setId(order.getId());
         orderDto.setPrice(order.getPrice());
         orderDto.setOrderDate(order.getOrderDate());
+        orderDto.setStatus(order.getStatus());
 
         return orderDto;
     }

@@ -26,7 +26,7 @@ public class MemberController {
 
         try {
             memberService.join(member);
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             e.printStackTrace();
             result = e.getMessage();
         }
