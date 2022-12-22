@@ -32,7 +32,9 @@ public class ItemService {
     @Transactional
     public void update(ItemDto itemDto) { // 아이템 수정
 
-        itemRepository.updateItem(itemDto.getId(), itemDto.getName(), itemDto.getPrice());
+        Item item = itemRepository.findById(itemDto.getId()).get();
+        item.setName(itemDto.getName());
+        item.setPrice(itemDto.getPrice());
     }
 
     public ItemDto getById(Long id) { // 아이템 조회

@@ -34,6 +34,21 @@ public class ItemController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @PostMapping("/update")
+    public ResponseEntity<String> update(@RequestBody ItemDto itemDto) {
+
+        String result = "success";
+
+        try {
+            itemService.update(itemDto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = "fail";
+        }
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<ItemDto> getById(@PathVariable Long id) {
 
