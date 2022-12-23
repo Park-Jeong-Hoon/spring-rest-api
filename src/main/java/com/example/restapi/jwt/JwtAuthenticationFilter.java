@@ -59,15 +59,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
 
-        SecretKey jwtKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode("asdfKlja124o98qrchO8cawcl8fn48Ruqoh328hr29h3uwerhl21qil8Leuu93reWPalh23oI157p0w8439u3qfkeAjfoirowafiowQpurwknz"));
+        SecretKey jwtKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(JwtProperties.SECRET));
 
         String jwtToken = Jwts.builder()
                 .setSubject("jwtToken")
-                .setExpiration(new Date(System.currentTimeMillis() + 60000))
+                .setExpiration(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
                 .setClaims(Map.of("id", principalDetails.getMember().getId()))
                 .signWith(jwtKey, SignatureAlgorithm.HS512)
                 .compact();
 
-        response.addHeader("Authorization", "Bearer " + jwtToken);
+        response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.AUTH_TYPE + jwtToken);
     }
 }

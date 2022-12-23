@@ -31,20 +31,20 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 //        super.doFilterInternal(request, response, chain);
-        String jwtHeader = request.getHeader("Authorization");
+        String jwtHeader = request.getHeader(JwtProperties.HEADER_STRING);
         System.out.println("jwtHeader: " + jwtHeader);
 
-        if (jwtHeader == null || !jwtHeader.startsWith("Bearer ")) {
+        if (jwtHeader == null || !jwtHeader.startsWith(JwtProperties.AUTH_TYPE)) {
             chain.doFilter(request, response);
             return;
         }
 
         // JWT 토큰 검증
-        String jwtToken = jwtHeader.replace("Bearer ", "");
+        String jwtToken = jwtHeader.replace(JwtProperties.AUTH_TYPE, "");
 
         Claims claims = null;
         try {
-            claims = Jwts.parserBuilder().setSigningKey("asdfKlja124o98qrchO8cawcl8fn48Ruqoh328hr29h3uwerhl21qil8Leuu93reWPalh23oI157p0w8439u3qfkeAjfoirowafiowQpurwknz").build()
+            claims = Jwts.parserBuilder().setSigningKey(JwtProperties.SECRET).build()
                     .parseClaimsJws(jwtToken).getBody();
         } catch (Exception e) {
             e.printStackTrace();
