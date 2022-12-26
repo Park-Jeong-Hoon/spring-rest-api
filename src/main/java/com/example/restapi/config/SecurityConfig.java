@@ -40,8 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtAuthenticationFilter(authenticationManager())) // WebSecurityConfigurerAdapter 이 가지고 있는 authenticationManager() 을 인자로 넣어줌
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), memberRepository))
                 .authorizeRequests()
-                .antMatchers("/login").permitAll()
                 .antMatchers("/api/member/join").permitAll()
+                .antMatchers("/api/member/login").permitAll()
                 .anyRequest().authenticated();
     }
 }
