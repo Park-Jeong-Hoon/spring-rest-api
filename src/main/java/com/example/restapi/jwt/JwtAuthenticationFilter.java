@@ -63,9 +63,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         SecretKey jwtKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(JwtProperties.SECRET));
 
         String jwtToken = Jwts.builder()
+                .setClaims(Map.of("id", principalDetails.getMember().getId()))
                 .setSubject("jwtToken")
                 .setExpiration(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
-                .setClaims(Map.of("id", principalDetails.getMember().getId()))
                 .signWith(jwtKey, SignatureAlgorithm.HS512)
                 .compact();
 
